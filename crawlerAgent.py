@@ -1,4 +1,6 @@
+import colorama, fontstyle
 import requests
+from colorama import *
 from bs4 import BeautifulSoup
 
 
@@ -27,6 +29,7 @@ def nbc_frontpage_extractor():
         # add back to test print("Link:", link)
 
     print("Articles in the list: " + str(article_count))
+    print()
     return headline_links
 
 
@@ -38,15 +41,21 @@ def articlepage_extractor(links_dict):
         meta_tag = soup.find("meta", {"property": "og:title", })
         if meta_tag:
             content = meta_tag.get("content")
-            print("Title:", content)
+            print("==================================================================================================")
+            titleHeader = fontstyle.apply("Title: ", 'bold')
+            print(titleHeader, content)
+            print()
         else:
             print("Title not found...")
+            print()
 
         # pulls meta description
         meta_description = soup.find("meta", {"name": "description"})
         if meta_description:
             content = meta_description.get("content")
-            print("Meta Description:", content)
+            descriptionHeader = fontstyle.apply("Meta Description: ", 'bold')
+            print(descriptionHeader, content)
+            print()
         else:
             print("Meta description not found...")
 
@@ -54,17 +63,32 @@ def articlepage_extractor(links_dict):
         if article_content:
             # Extract text content from all <p> tags within the article-body__content div
             article_text = "\n".join([p.get_text(strip=True) for p in article_content.find_all("p")])
+            summaryHeader = fontstyle.apply("Article Contents: ", 'bold')
+            print(summaryHeader)
             print(article_text)
         else:
             return None
 
-        # You can extract more information from the article page here
         print("Link:", link)
         print()
 
 
 
 def main():
+    colorama.init(autoreset=True)
+    print(f"{Fore.RED}██████╗░███████╗██████╗░███╗░░██╗░█████╗░░█████╗░██╗░░██╗██╗██╗░██████╗░░███╗░░██╗██████╗░░█████╗░")
+    print(f"{Fore.RED}██╔══██╗██╔════╝██╔══██╗████╗░██║██╔══██╗██╔══██╗██║░██╔╝██║╚█║██╔════╝░░████╗░██║██╔══██╗██╔══██╗")
+    print(f"{Fore.RED}██████╦╝█████╗░░██████╔╝██╔██╗██║███████║██║░░╚═╝█████═╝░██║░╚╝╚█████╗░░░██╔██╗██║██████╦╝██║░░╚═╝")
+    print(f"{Fore.RED}██╔══██╗██╔══╝░░██╔══██╗██║╚████║██╔══██║██║░░██╗██╔═██╗░██║░░░░╚═══██╗░░██║╚████║██╔══██╗██║░░██╗")
+    print(f"{Fore.RED}██████╦╝███████╗██║░░██║██║░╚███║██║░░██║╚█████╔╝██║░╚██╗██║░░░██████╔╝░░██║░╚███║██████╦╝╚█████╔╝")
+    print(f"{Fore.RED}╚═════╝░╚══════╝╚═╝░░╚═╝╚═╝░░╚══╝╚═╝░░╚═╝░╚════╝░╚═╝░░╚═╝╚═╝░░░╚═════╝░░░╚═╝░░╚══╝╚═════╝░░╚════╝░")
+    print()
+    print(f"{Fore.RED}███╗░░██╗███████╗░██╗░░░░░░░██╗░██████╗░░░██████╗░██████╗░░█████╗░██████╗░██████╗░███████╗██████╗░")
+    print(f"{Fore.RED}████╗░██║██╔════╝░██║░░██╗░░██║██╔════╝░░██╔════╝░██╔══██╗██╔══██╗██╔══██╗██╔══██╗██╔════╝██╔══██╗")
+    print(f"{Fore.RED}██╔██╗██║█████╗░░░╚██╗████╗██╔╝╚█████╗░░░██║░░██╗░██████╔╝███████║██████╦╝██████╦╝█████╗░░██████╔╝")
+    print(f"{Fore.RED}██║╚████║██╔══╝░░░░████╔═████║░░╚═══██╗░░██║░░╚██╗██╔══██╗██╔══██║██╔══██╗██╔══██╗██╔══╝░░██╔══██╗")
+    print(f"{Fore.RED}██║░╚███║███████╗░░╚██╔╝░╚██╔╝░██████╔╝░░╚██████╔╝██║░░██║██║░░██║██████╦╝██████╦╝███████╗██║░░██║")
+    print(f"{Fore.RED}╚═╝░░╚══╝╚══════╝░░░╚═╝░░░╚═╝░░╚═════╝░░░░╚═════╝░╚═╝░░╚═╝╚═╝░░╚═╝╚═════╝░╚═════╝░╚══════╝╚═╝░░╚═╝")
     links_list = nbc_frontpage_extractor()
     articlepage_extractor(links_list)
 
