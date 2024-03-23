@@ -27,7 +27,7 @@ def nbc_frontpage_extractor():
     #for headline, link in headline_links.items():
         # add back to test print("Headline:", headline)
         # add back to test print("Link:", link)
-
+    print(headline_links)
     print("Articles in the list: " + str(article_count))
     print()
     return headline_links
@@ -66,8 +66,12 @@ def articlepage_extractor(links_dict):
             summaryHeader = fontstyle.apply("Article Contents: ", 'bold')
             print(summaryHeader)
             print(article_text)
+            print("Link:", link)
+            print()
         else:
-            return None
+            print("Article content not found for link:", link)
+            print()1
+
 
         print("Link:", link)
         print()
